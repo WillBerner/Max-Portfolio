@@ -1,0 +1,17 @@
+<section class="hero">
+  <header class="hero-header">
+    <h1>Max Portfolio</h1>
+    <p class="lead">Architecture and interior design portfolio showcasing selected projects.</p>
+    <a class="btn" routerLink="/projects">View All Projects</a>
+  </header>
+
+  <section class="samples">
+    <h2>Selected Projects</h2>
+    <div class="grid">
+      <article class="card" *ngFor="let p of sampleProjects">
+        <img [src]="p.image" [alt]="p.title" />
+        <h3>{{ p.title }}</h3>
+      </article>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,17 @@
+<section class="projects">
+  <header class="projects-header">
+    <h1>Projects</h1>
+    <p>Browse selected architecture and interior projects.</p>
+    <a class="back" routerLink="/">← Back to Home</a>
+  </header>
+
+  <div class="grid">
+    <article class="card" *ngFor="let p of projects">
+      <img [src]="p.image" [alt]="p.title" />
+      <div class="meta">
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.description }}</p>
+      </div>
+    </article>
+  </div>
+</section>
