@@ -14,19 +14,19 @@ export class ProjectsComponent {
     {
       id: 'riverside-house',
       title: 'Riverside House',
-      description: 'A quiet riverside retreat with large glass facades.',
+      description: 'A CENTER FOR THE BUILT ENVIRONMENT\nEXTERIOR RENDER',
       image: 'assets/images/Street View.png',
     },
     {
       id: 'modern-loft',
       title: 'Modern Loft',
-      description: 'Industrial loft conversion with minimalist finishes.',
+      description: 'POD A+D VENICE BIENNIAL\n3D PRINTED MODEL',
       image: 'assets/images/POD A+D Model 15.png',
     },
     {
       id: 'studio-renovation',
       title: 'Studio Renovation',
-      description: 'Compact studio optimized for light and storage.',
+      description: 'A CENTER FOR THE BUILT ENVIRONMENT\nRAMMED EARTH MODEL',
       image: 'assets/images/Rammed Earth Model.JPG',
     },
   ];

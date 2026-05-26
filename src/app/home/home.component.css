@@ -50,6 +50,9 @@
 .card h3 { margin: 0 0 0.5rem; }
 .caption { color: #444; margin: 0; }
 
+/* Preserve newline characters in captions */
+.caption { white-space: pre-line; text-transform: uppercase; }
+
 /* Fixed about text in the background */
 .about-bg {
   position: fixed;

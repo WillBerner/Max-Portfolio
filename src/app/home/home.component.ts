@@ -15,18 +15,17 @@ export class HomeComponent {
     {
       title: 'POD A+D Model',
       image: 'assets/images/POD A+D Model 15.png',
-      caption: 'Industrial conversion emphasizing open plan and raw finishes.',
+      caption: 'POD A+D VENICE BIENNIAL\n3D PRINTED MODEL',
     },
     {
       title: 'Rammed Earth Model',
       image: 'assets/images/Rammed Earth Model.JPG',
-      caption: 'Material-driven rammed earth concept model.',
+      caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nRAMMED EARTH MODEL',
     },
     {
       title: 'Street View',
       image: 'assets/images/Street View.png',
-      caption:
-        'A quiet riverside retreat with generous glazing and clean timber details.',
+      caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nEXTERIOR RENDER',
     },
   ];
 
