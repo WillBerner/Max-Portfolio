@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="100%" height="100%" fill="#e6f7ff"/>
+  <g fill="#9fd3ff">
+    <rect x="80" y="420" width="480" height="280" rx="10"/>
+    <rect x="360" y="300" width="640" height="180" rx="8"/>
+  </g>
+  <g fill="#074769">
+    <rect x="120" y="460" width="200" height="160"/>
+    <rect x="820" y="340" width="120" height="120"/>
+  </g>
+  <path d="M0 600 C200 520 400 640 600 560 C800 480 1000 600 1200 520 L1200 800 L0 800 Z" fill="#b3ecff"/>
+  <text x="60" y="80" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#074769">Riverside House</text>
+</svg>
