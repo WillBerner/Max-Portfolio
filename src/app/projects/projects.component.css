@@ -2,7 +2,12 @@
   display: block;
   padding: 2rem;
 }
-.projects { position: relative; }
+.projects {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 4rem);
+}
 .projects-header {
   display: flex;
   align-items: center;
@@ -10,6 +15,9 @@
   margin-bottom: 1.5rem;
 }
 .back-arrow {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: auto;
   color: #000;
   text-decoration: none;
   font-size: 1rem;
