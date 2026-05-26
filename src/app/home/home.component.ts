@@ -14,8 +14,18 @@ export class HomeComponent implements OnInit {
   constructor(private ngZone: NgZone, private cd: ChangeDetectorRef, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    // open slideshow when arriving with ?slide=<index>
+    // open slideshow when arriving with ?slideId=<id> or ?slide=<index>
     this.route.queryParams.subscribe((params) => {
+      const slideId = params['slideId'];
+      if (slideId !== undefined && slideId !== null) {
+        const idx = this.sampleProjects.findIndex((p) => p.id === slideId);
+        if (idx !== -1) {
+          this.openSlideshow(idx);
+          this.router.navigate([], { queryParams: {}, replaceUrl: true });
+          return;
+        }
+      }
+
       const s = params['slide'];
       if (s !== undefined && s !== null) {
         const idx = Number(s);
@@ -30,16 +40,19 @@ export class HomeComponent implements OnInit {
   }
   sampleProjects = [
     {
+      id: 'modern-loft',
       title: 'POD A+D Model',
       image: 'assets/images/POD A+D Model 15.png',
       caption: 'POD A+D VENICE BIENNIAL\n3D PRINTED MODEL',
     },
     {
+      id: 'studio-renovation',
       title: 'Rammed Earth Model',
       image: 'assets/images/Rammed Earth Model.JPG',
       caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nRAMMED EARTH MODEL',
     },
     {
+      id: 'riverside-house',
       title: 'Street View',
       image: 'assets/images/Street View.png',
       caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nEXTERIOR RENDER',

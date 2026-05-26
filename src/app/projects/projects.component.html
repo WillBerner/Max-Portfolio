@@ -2,7 +2,7 @@
   <a class="back-arrow" routerLink="/">← Back</a>
 
   <div class="grid tiles">
-    <a class="tile" *ngFor="let p of projects; let i = index" [routerLink]="['/']" [queryParams]="{ slide: i }">
+    <a class="tile" *ngFor="let p of projects" [routerLink]="['/']" [queryParams]="{ slideId: p.id }">
       <img [src]="p.image" [alt]="p.title" />
     </a>
   </div>
