@@ -41,6 +41,7 @@ export class HomeComponent {
     this.slideshowOpen = true;
     this.showControls = true;
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('slideshow-open');
     this.resetHideTimer();
     this.addKeyListener();
     this.cd.detectChanges();
@@ -51,6 +52,7 @@ export class HomeComponent {
     document.body.style.overflow = '';
     this.clearHideTimer();
     this.removeKeyListener();
+    document.body.classList.remove('slideshow-open');
     this.cd.detectChanges();
   }
 
@@ -146,5 +148,6 @@ export class HomeComponent {
     this.clearHideTimer();
     document.body.style.overflow = '';
     this.removeKeyListener();
+    document.body.classList.remove('slideshow-open');
   }
 }
