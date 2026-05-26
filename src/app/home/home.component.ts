@@ -1,4 +1,5 @@
-import { Component, OnDestroy, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, NgZone, ChangeDetectorRef, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -9,8 +10,24 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
-  constructor(private ngZone: NgZone, private cd: ChangeDetectorRef) {}
+export class HomeComponent implements OnInit {
+  constructor(private ngZone: NgZone, private cd: ChangeDetectorRef, private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    // open slideshow when arriving with ?slide=<index>
+    this.route.queryParams.subscribe((params) => {
+      const s = params['slide'];
+      if (s !== undefined && s !== null) {
+        const idx = Number(s);
+        if (!isNaN(idx)) {
+          // open requested slide
+          this.openSlideshow(idx);
+          // remove query param from url
+          this.router.navigate([], { queryParams: {} , replaceUrl: true });
+        }
+      }
+    });
+  }
   sampleProjects = [
     {
       title: 'POD A+D Model',
