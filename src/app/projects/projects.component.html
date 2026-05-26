@@ -1,5 +1,8 @@
 <section class="projects">
-  <a class="back-arrow" routerLink="/">← Back</a>
+  <div class="projects-header">
+    <a class="back-arrow" routerLink="/">← Back</a>
+    <h1>Projects</h1>
+  </div>
 
   <div class="grid tiles">
     <a class="tile" *ngFor="let p of projects" [routerLink]="['/']" [queryParams]="{ slideId: p.id }">

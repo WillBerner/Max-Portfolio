@@ -3,15 +3,22 @@
   padding: 2rem;
 }
 .projects { position: relative; }
+.projects-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
 .back-arrow {
-  position: absolute;
-  top: 0.25rem;
-  left: 0;
-  display: inline-block;
   color: #000;
   text-decoration: none;
   font-size: 1rem;
   padding: 0.25rem 0.5rem;
+}
+.projects-header h1 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 700;
 }
 .grid.tiles {
   display: grid;
