@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/max-portfolio/browser
+          path: dist/Max-Portfolio/browser
 
   deploy:
     needs: build

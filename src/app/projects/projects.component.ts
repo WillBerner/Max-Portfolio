@@ -12,12 +12,6 @@ import { RouterLink } from '@angular/router';
 export class ProjectsComponent {
   projects = [
     {
-      id: 'riverside-house',
-      title: 'Riverside House',
-      description: 'A CENTER FOR THE BUILT ENVIRONMENT\nEXTERIOR RENDER',
-      image: 'assets/images/Street View.png',
-    },
-    {
       id: 'modern-loft',
       title: 'Modern Loft',
       description: 'POD A+D VENICE BIENNIAL\n3D PRINTED MODEL',
@@ -28,6 +22,12 @@ export class ProjectsComponent {
       title: 'Studio Renovation',
       description: 'A CENTER FOR THE BUILT ENVIRONMENT\nRAMMED EARTH MODEL',
       image: 'assets/images/Rammed Earth Model.JPG',
+    },
+    {
+      id: 'riverside-house',
+      title: 'Riverside House',
+      description: 'A CENTER FOR THE BUILT ENVIRONMENT\nEXTERIOR RENDER',
+      image: 'assets/images/Street View.png',
     },
   ];
 }
