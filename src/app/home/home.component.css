@@ -39,19 +39,34 @@
   box-shadow: 0 6px 30px rgba(0,0,0,0.08);
   position: relative;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
 }
 .card img {
-  width: 100%;
-  height: auto; /* allow natural image heights */
+  width: 70%;
+  flex-shrink: 0;
+  height: auto;
   object-fit: cover;
   display: block;
 }
-.card-body { padding: 1rem 1rem 1.5rem; text-align: center; }
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  flex: 1;
+}
 .card h3 { margin: 0 0 0.5rem; }
 .caption { color: #444; margin: 0; }
 
-/* Preserve newline characters in captions */
-.caption { white-space: pre-line; text-transform: uppercase; }
+/* Preserve newline characters in captions; Joanna font for description text */
+.caption {
+  white-space: pre-line;
+  text-transform: uppercase;
+  font-family: 'Joanna', serif;
+}
 
 /* Fixed about text in the background */
 .about-bg {
