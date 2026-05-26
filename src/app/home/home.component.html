@@ -1,17 +1,27 @@
 <section class="hero">
-  <header class="hero-header">
-    <h1>Max's Portfolio</h1>
-    <p class="lead">Architecture and interior design portfolio showcasing selected projects.</p>
-    <a class="btn" routerLink="/projects">View All Projects</a>
-  </header>
+  
+
+  <div class="about-bg">
+    <p>
+      About — <a href="https://www.linkedin.com/in/maxwell-berner/" target="_blank" rel="noopener noreferrer">I’m Max</a>, an architect and interior designer focused on quiet,
+      material-driven spaces that feel lived-in and considered. This site
+      showcases selected projects and approaches to design.
+    </p>
+  </div>
+  
+  <div class="hero-spacer" aria-hidden="true"></div>
 
   <section class="samples">
-    <h2>Selected Projects</h2>
-    <div class="grid">
+    <div class="list">
       <article class="card" *ngFor="let p of sampleProjects">
         <img [src]="p.image" [alt]="p.title" />
-        <h3>{{ p.title }}</h3>
+        <div class="card-body">
+          <h3>{{ p.title }}</h3>
+          <p class="caption">{{ p.caption }}</p>
+        </div>
       </article>
     </div>
   </section>
+
+  <a class="view-all" routerLink="/projects">View All Projects</a>
 </section>

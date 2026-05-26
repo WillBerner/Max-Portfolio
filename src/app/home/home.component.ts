@@ -12,16 +12,20 @@ import { RouterLink } from '@angular/router';
 export class HomeComponent {
   sampleProjects = [
     {
-      title: 'Riverside House',
-      image: 'assets/images/riverside-house.svg',
+      title: 'POD A+D Model',
+      image: 'assets/images/POD A+D Model 15.png',
+      caption: 'Industrial conversion emphasizing open plan and raw finishes.',
     },
     {
-      title: 'Modern Loft',
-      image: 'assets/images/modern-loft.svg',
+      title: 'Rammed Earth Model',
+      image: 'assets/images/Rammed Earth Model.JPG',
+      caption: 'Material-driven rammed earth concept model.',
     },
     {
-      title: 'Studio Renovation',
-      image: 'assets/images/studio-renovation.svg',
+      title: 'Street View',
+      image: 'assets/images/Street View.png',
+      caption:
+        'A quiet riverside retreat with generous glazing and clean timber details.',
     },
   ];
 }

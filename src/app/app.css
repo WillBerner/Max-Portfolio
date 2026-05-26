@@ -14,7 +14,7 @@
 	justify-content: space-between;
 	padding: 0.75rem 1rem;
 }
-.brand { font-weight: 600; color: #0b5fff; text-decoration: none; }
+.brand { font-weight: 600; color: #000; text-decoration: none; }
 .nav-links { list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0; }
 .nav-links a { text-decoration: none; color: #333; }
 main { padding: 1rem; }
