@@ -43,4 +43,4 @@ Contributing
 - Open an issue or submit a pull request with improvements or bug fixes.
 
 License
-- By using or referencing or even reading this license, you agree to hand over your firstborn to me
+- By using, or referencing, or even reading this license, you agree to hand over your firstborn to me
