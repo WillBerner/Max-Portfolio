@@ -13,7 +13,7 @@
 
   <section class="samples">
     <div class="list">
-      <article class="card" *ngFor="let p of sampleProjects">
+      <article class="card" *ngFor="let p of sampleProjects; let i = index" (click)="openSlideshow(i)">
         <img [src]="p.image" [alt]="p.title" />
         <div class="card-body">
           <h3>{{ p.title }}</h3>
@@ -24,4 +24,14 @@
   </section>
 
   <a class="view-all" routerLink="/projects">View All Projects</a>
+  
+  <!-- Slideshow / Lightbox overlay -->
+  <div class="slideshow-overlay" *ngIf="slideshowOpen" (mousemove)="onOverlayMouseMove()" (click)="closeSlideshow()" (touchstart)="$event.preventDefault()">
+    <div class="slideshow-inner" (click)="$event.stopPropagation()" (touchstart)="$event.stopPropagation(); onTouchStart($event)" (touchmove)="$event.stopPropagation(); onTouchMove($event)" (touchend)="$event.stopPropagation(); onTouchEnd($event)">
+      <img class="slideshow-image" [src]="sampleProjects[currentIndex].image" [alt]="sampleProjects[currentIndex].title" />
+      <button class="ctrl btn-close" *ngIf="showControls" (click)="closeSlideshow()">✕</button>
+      <button class="ctrl btn-prev" *ngIf="showControls" (click)="prev(); $event.stopPropagation()">◀</button>
+      <button class="ctrl btn-next" *ngIf="showControls" (click)="next(); $event.stopPropagation()">▶</button>
+    </div>
+  </div>
 </section>
