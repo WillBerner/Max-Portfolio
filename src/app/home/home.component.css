@@ -58,8 +58,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   font-size: 18px;
   color: #000;
   font-family: 'Joanna', serif;
@@ -75,6 +75,12 @@
 .card-sub {
   font-weight: 400;
   font-family: inherit;
+}
+
+/* Shrink rammed earth image to ~60% of normal card width */
+.card-small {
+  flex: 0 0 45%;
+  width: 45%;
 }
 
 /* Fixed about text in the background */
@@ -114,6 +120,9 @@
   padding: 0;
   color: inherit;
   font-weight: 500;
+  font-family: 'Joanna', serif;
+  text-transform: uppercase;
+  font-size: 18px;
   z-index: 3;
   pointer-events: auto;
 }

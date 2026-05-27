@@ -13,7 +13,7 @@
   <section class="samples">
     <div class="list">
       <div class="card-row" *ngFor="let p of sampleProjects; let i = index">
-        <article class="card" (click)="openSlideshow(i)">
+        <article class="card" [class.card-small]="p.small" (click)="openSlideshow(i)">
           <img [src]="p.image" [alt]="p.title" />
         </article>
         <span class="card-caption">

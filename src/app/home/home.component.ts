@@ -44,13 +44,7 @@ export class HomeComponent implements OnInit {
       subtitle: '3D PRINTED MODEL',
       image: 'assets/images/POD A+D Model 15.png',
       caption: 'POD A+D VENICE BIENNIAL\n3D PRINTED MODEL',
-    },
-    {
-      id: 'studio-renovation',
-      title: 'A CENTER FOR THE BUILT ENVIRONMENT',
-      subtitle: 'RAMMED EARTH MODEL',
-      image: 'assets/images/Rammed Earth Model.JPG',
-      caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nRAMMED EARTH MODEL',
+      small: false,
     },
     {
       id: 'riverside-house',
@@ -58,6 +52,15 @@ export class HomeComponent implements OnInit {
       subtitle: 'EXTERIOR RENDER',
       image: 'assets/images/Street View.png',
       caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nEXTERIOR RENDER',
+      small: false,
+    },
+    {
+      id: 'studio-renovation',
+      title: 'A CENTER FOR THE BUILT ENVIRONMENT',
+      subtitle: 'RAMMED EARTH MODEL',
+      image: 'assets/images/Rammed Earth Model.JPG',
+      caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nRAMMED EARTH MODEL',
+      small: true,
     },
   ];
 
