@@ -30,30 +30,32 @@ export class HomeComponent implements OnInit {
       if (s !== undefined && s !== null) {
         const idx = Number(s);
         if (!isNaN(idx)) {
-          // open requested slide
           this.openSlideshow(idx);
-          // remove query param from url
           this.router.navigate([], { queryParams: {} , replaceUrl: true });
         }
       }
     });
   }
+
   sampleProjects = [
     {
       id: 'modern-loft',
-      title: 'POD A+D Model',
+      title: 'POD A+D VENICE BIENNIAL',
+      subtitle: '3D PRINTED MODEL',
       image: 'assets/images/POD A+D Model 15.png',
       caption: 'POD A+D VENICE BIENNIAL\n3D PRINTED MODEL',
     },
     {
       id: 'studio-renovation',
-      title: 'Rammed Earth Model',
+      title: 'A CENTER FOR THE BUILT ENVIRONMENT',
+      subtitle: 'RAMMED EARTH MODEL',
       image: 'assets/images/Rammed Earth Model.JPG',
       caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nRAMMED EARTH MODEL',
     },
     {
       id: 'riverside-house',
-      title: 'Street View',
+      title: 'A CENTER FOR THE BUILT ENVIRONMENT',
+      subtitle: 'EXTERIOR RENDER',
       image: 'assets/images/Street View.png',
       caption: 'A CENTER FOR THE BUILT ENVIRONMENT\nEXTERIOR RENDER',
     },
@@ -100,7 +102,6 @@ export class HomeComponent implements OnInit {
   }
 
   onOverlayMouseMove() {
-    // show controls when mouse moves and reset hide timer
     this.showControls = true;
     this.resetHideTimer();
   }
@@ -119,9 +120,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // Keyboard and touch support
   private keyHandler = (e: KeyboardEvent) => {
-    // run inside Angular's zone so change detection runs immediately
     this.ngZone.run(() => {
       if (!this.slideshowOpen) return;
       if (e.key === 'ArrowLeft') { this.prev(); }
@@ -144,7 +143,6 @@ export class HomeComponent implements OnInit {
   }
 
   onTouchMove(e: TouchEvent) {
-    // keep showing controls while moving
     this.showControls = true;
     this.resetHideTimer();
   }
@@ -157,7 +155,6 @@ export class HomeComponent implements OnInit {
     const dt = Date.now() - this.touchStartTime;
     const absDx = Math.abs(dx);
     const absDy = Math.abs(dy);
-    // simple swipe detection: horizontal swipe with sufficient distance and less vertical movement
     if (absDx > 40 && absDx > absDy && dt < 1000) {
       if (dx > 0) { this.prev(); }
       else { this.next(); }

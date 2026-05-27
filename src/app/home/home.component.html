@@ -4,7 +4,6 @@
   <div class="about-bg">
     <p>
       <a href="https://www.linkedin.com/in/maxwell-berner/" target="_blank" rel="noopener noreferrer">Maxwell Berner</a> recently graduated with a Bachelors of Architecture Hons from the Mackintosh School of Architecture at the Glasgow School of Art in Glasgow, Scotland. He currently lives in North Carolina and is seeking work starting in fall of 2026. 
-      <br/><br/>
       Email: <a href="mailto:maxrberner@gmail.com">maxrberner@gmail.com</a>
     </p>
   </div>
@@ -13,13 +12,15 @@
 
   <section class="samples">
     <div class="list">
-      <article class="card" *ngFor="let p of sampleProjects; let i = index" (click)="openSlideshow(i)">
-        <img [src]="p.image" [alt]="p.title" />
-        <div class="card-body">
-          <h3>{{ p.title }}</h3>
-          <p class="caption">{{ p.caption }}</p>
-        </div>
-      </article>
+      <div class="card-row" *ngFor="let p of sampleProjects; let i = index">
+        <article class="card" (click)="openSlideshow(i)">
+          <img [src]="p.image" [alt]="p.title" />
+        </article>
+        <span class="card-caption">
+          <strong>{{ p.title }}</strong>
+          <span class="card-sub">{{ p.subtitle }}</span>
+        </span>
+      </div>
     </div>
   </section>
 
