@@ -4,10 +4,39 @@
   </div>
 
   <div class="grid tiles">
-    <a class="tile" *ngFor="let p of projects" [routerLink]="['/']" [queryParams]="{ slideId: p.id }">
+    <div class="tile" *ngFor="let p of projects" (click)="openPdf(p)">
       <img [src]="p.image" [alt]="p.title" />
-    </a>
+    </div>
   </div>
 
   <a class="back-arrow" routerLink="/">←</a>
 </section>
+
+<!-- PDF Slideshow overlay -->
+<div class="slideshow-overlay"
+     *ngIf="slideshowOpen"
+     (mousemove)="onOverlayMouseMove()"
+     (click)="closeSlideshow()"
+     (touchstart)="$event.preventDefault()">
+
+  <div class="slideshow-inner"
+       (click)="$event.stopPropagation()"
+       (touchstart)="$event.stopPropagation(); onTouchStart($event)"
+       (touchmove)="$event.stopPropagation(); onTouchMove($event)"
+       (touchend)="$event.stopPropagation(); onTouchEnd($event)">
+
+    <div class="loading-indicator" *ngIf="isLoading">Loading…</div>
+
+    <canvas id="pdf-canvas" [style.display]="isLoading ? 'none' : 'block'"></canvas>
+
+    <div class="page-indicator" *ngIf="!isLoading && totalPages > 0">
+      {{ currentPage }} / {{ totalPages }}
+    </div>
+
+    <button class="ctrl btn-close" *ngIf="showControls" (click)="closeSlideshow()">✕</button>
+    <button class="ctrl btn-prev" *ngIf="showControls && currentPage > 1"
+            (click)="prevPage(); $event.stopPropagation()">◀</button>
+    <button class="ctrl btn-next" *ngIf="showControls && currentPage < totalPages"
+            (click)="nextPage(); $event.stopPropagation()">▶</button>
+  </div>
+</div>
