@@ -1,17 +1,18 @@
-import { Component, OnDestroy, NgZone, ChangeDetectorRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, NgZone, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import * as pdfjsLib from 'pdfjs-dist';
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.mjs';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'assets/pdf.worker.min.mjs';
 
 export interface Project {
   id: string;
   title: string;
-  description: string;
-  image?: string;
-  pdf?: string;
-  pageCount?: number;
+  subtitle: string;
+  pdf: string;
+  thumbnail?: string;
 }
 
 @Component({
@@ -21,39 +22,69 @@ export interface Project {
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
 })
-export class ProjectsComponent implements OnDestroy {
+export class ProjectsComponent implements OnInit, OnDestroy {
   constructor(private ngZone: NgZone, private cd: ChangeDetectorRef) {}
 
   projects: Project[] = [
     {
-      id: 'pdf-project-1',
-      title: 'PDF Project 1',
-      description: 'PROJECT ONE',
-      pdf: 'assets/pdfs/Center for Contemporary Architecture.pdf',
-      image: 'assets/pdfs/Center for Contemporary Architecture.pdf', // thumbnail shown on tile
+      id: 'center-for-contemporary-architecture',
+      title: 'A CENTER FOR THE BUILT ENVIRONMENT',
+      subtitle: 'THESIS PROJECT',
+      pdf: 'assets/pdfs/Center_for_Contemporary_Architecture.pdf',
     },
     {
-      id: 'pdf-project-2',
-      title: 'PDF Project 2',
-      description: 'PROJECT TWO',
-      pdf: 'assets/pdfs/PERMIT SET 1.pdf',
-      image: 'assets/pdfs/PERMIT SET 1.pdf',
+      id: 'permit-set-1',
+      title: 'OGDEN HOUSE',
+      subtitle: 'PERMIT SET 1',
+      pdf: 'assets/pdfs/PERMIT_SET_1.pdf',
     },
     {
-      id: 'pdf-project-3',
-      title: 'PDF Project 3',
-      description: 'PROJECT THREE',
-      pdf: 'assets/pdfs/PERMIT SET 3.pdf',
-      image: 'assets/pdfs/PERMIT SET 3.pdf',
+      id: 'permit-set-3',
+      title: 'OGDEN HOUSE',
+      subtitle: 'PERMIT SET 3',
+      pdf: 'assets/pdfs/PERMIT_SET_3.pdf',
     },
     {
-      id: 'pdf-project-4',
-      title: 'PDF Project 4',
-      description: 'PROJECT FOUR',
-      pdf: 'assets/pdfs/Rabbit Hole.pdf',
-      image: 'assets/pdfs/Rabbit Hole.pdf',
+      id: 'rabbit-hole',
+      title: 'POD A+D RABBIT HOLE DISTILLERY',
+      subtitle: 'VENICE BIENNIAL MODEL',
+      pdf: 'assets/pdfs/Rabbit_Hole.pdf',
     },
   ];
+
+  ngOnInit() {
+  this.generateThumbnails();
+}
+
+async generateThumbnails() {
+  for (const project of this.projects) {
+    try {
+      const pdf = await pdfjsLib.getDocument(project.pdf).promise;
+      const page = await pdf.getPage(1);
+
+      const viewport = page.getViewport({ scale: 0.4 });
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) continue;
+
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      await page.render({
+        canvasContext: ctx,
+        viewport
+      }).promise;
+
+      project.thumbnail = canvas.toDataURL('image/jpeg', 0.85);
+
+      this.cd.detectChanges();
+    } catch (err) {
+      console.error('Thumbnail generation failed:', err);
+    }
+  }
+}
 
   // Slideshow state
   slideshowOpen = false;
@@ -62,6 +93,7 @@ export class ProjectsComponent implements OnDestroy {
   totalPages = 0;
   showControls = true;
   isLoading = false;
+  loadError = false;
 
   private pdfDoc: any = null;
   private controlsTimeout: any = null;
@@ -74,7 +106,6 @@ export class ProjectsComponent implements OnDestroy {
     });
   };
 
-  // Touch support
   private touchStartX = 0;
   private touchStartY = 0;
   private touchStartTime = 0;
@@ -82,27 +113,34 @@ export class ProjectsComponent implements OnDestroy {
   openPdf(project: Project) {
     this.currentProject = project;
     this.currentPage = 1;
+    this.totalPages = 0;
     this.slideshowOpen = true;
     this.showControls = true;
     this.isLoading = true;
+    this.loadError = false;
     document.body.style.overflow = 'hidden';
     document.body.classList.add('slideshow-open');
     this.resetHideTimer();
     document.addEventListener('keydown', this.keyHandler);
     this.cd.detectChanges();
 
-    // Load the PDF using PDF.js (loaded via CDN in index.html)
     pdfjsLib.getDocument(project.pdf).promise.then((pdf: any) => {
       this.ngZone.run(() => {
         this.pdfDoc = pdf;
         this.totalPages = pdf.numPages;
         this.isLoading = false;
         this.cd.detectChanges();
-        this.renderPage(this.currentPage);
+        // setTimeout(0): let Angular flush the DOM so the canvas element exists
+        // before we try to render into it
+        setTimeout(() => this.renderPage(this.currentPage), 0);
       });
     }).catch((err: any) => {
       console.error('PDF load error:', err);
-      this.ngZone.run(() => { this.isLoading = false; this.cd.detectChanges(); });
+      this.ngZone.run(() => {
+        this.isLoading = false;
+        this.loadError = true;
+        this.cd.detectChanges();
+      });
     });
   }
 
@@ -113,13 +151,16 @@ export class ProjectsComponent implements OnDestroy {
 
     this.pdfDoc.getPage(pageNum).then((page: any) => {
       const canvas = document.getElementById('pdf-canvas') as HTMLCanvasElement;
-      if (!canvas) return;
+      if (!canvas) {
+        console.error('pdf-canvas element not found in DOM');
+        this.ngZone.run(() => { this.isLoading = false; this.cd.detectChanges(); });
+        return;
+      }
 
       const container = canvas.parentElement!;
-      const maxW = container.clientWidth * 0.9;
-      const maxH = container.clientHeight * 0.9;
+      const maxW = container.clientWidth * 0.88;
+      const maxH = container.clientHeight * 0.88;
 
-      // Scale to fit the container
       const viewport = page.getViewport({ scale: 1 });
       const scale = Math.min(maxW / viewport.width, maxH / viewport.height);
       const scaledViewport = page.getViewport({ scale });
@@ -133,7 +174,13 @@ export class ProjectsComponent implements OnDestroy {
           this.isLoading = false;
           this.cd.detectChanges();
         });
+      }).catch((err: any) => {
+        console.error('Render error:', err);
+        this.ngZone.run(() => { this.isLoading = false; this.cd.detectChanges(); });
       });
+    }).catch((err: any) => {
+      console.error('getPage error:', err);
+      this.ngZone.run(() => { this.isLoading = false; this.cd.detectChanges(); });
     });
   }
 
