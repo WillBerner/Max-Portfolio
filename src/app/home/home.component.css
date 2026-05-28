@@ -21,7 +21,10 @@
   text-decoration: none;
 }
 .samples {
-  width: 100%;
+  /* Constrain the samples area and center it to create left/right breathing room */
+  width: 90vw;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .list {
   display: flex;
@@ -32,10 +35,12 @@
 .card-row {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  /* Align image and caption along a single horizontal spine */
+  align-items: center;
   width: 100%;
   z-index: 1;
   position: relative;
+  gap: 0;
 }
 .card {
   background: transparent;
@@ -43,21 +48,33 @@
   overflow: hidden;
   box-shadow: 0 6px 30px rgba(0,0,0,0.08);
   cursor: pointer;
+  /* Keep the visual spine ~3/4 from the left: card takes ~75% */
   flex: 0 0 75%;
   width: 75%;
+  display: flex;
+  align-items: center;
+  /* Right-align the image so its right edge sits on the 75% spine */
+  justify-content: flex-end;
 }
 .card img {
   width: 100%;
   height: auto;
   object-fit: cover;
   display: block;
+  vertical-align: middle;
+  /* Let images size naturally; the .card column defines the spine */
+  max-width: 100%;
+  width: auto;
 }
 
 /* Caption in the right gutter (the 25% beside the card) */
 .card-caption {
-  flex: 1;
+  /* Caption sits to the right of the image and is vertically centered */
+  flex: 0 0 25%;
+  width: 25%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
   text-align: left;
   font-size: 18px;
@@ -65,8 +82,9 @@
   font-family: 'Joanna', serif;
   text-transform: uppercase;
   pointer-events: none;
-  padding: 0 1rem;
-  gap: 0.2rem;
+  /* Minimal space between image and text */
+  padding: 0 0.5rem;
+  gap: 0.1rem;
 }
 .card-caption strong {
   font-weight: 700;
@@ -79,8 +97,14 @@
 
 /* Shrink rammed earth image to ~60% of normal card width */
 .card-small {
-  flex: 0 0 45%;
-  width: 45%;
+  /* Keep the column (card) width consistent so the spine doesn't shift */
+  flex: 0 0 75%;
+  width: 75%;
+}
+.card.card-small img {
+  /* Make the image itself smaller while keeping its right edge aligned */
+  max-width: 60%;
+  height: auto;
 }
 
 /* Fixed about text in the background */
