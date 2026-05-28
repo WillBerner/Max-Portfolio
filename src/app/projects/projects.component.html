@@ -10,6 +10,13 @@
       <div class="tile-placeholder" *ngIf="!p.thumbnail">
         Loading…
       </div>
+
+      <div class="tile-overlay">
+        <div class="tile-meta">
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.subtitle }}</p>
+        </div>
+      </div>
     </div>
   </div>
 
