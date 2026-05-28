@@ -46,7 +46,10 @@
   background: transparent;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.08);
+  /* Remove visible white box / border shadow so card is fully transparent */
+  box-shadow: none;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
   /* Keep the visual spine ~3/4 from the left: card takes ~75% */
   flex: 0 0 75%;
@@ -65,6 +68,9 @@
   /* Let images size naturally; the .card column defines the spine */
   max-width: 100%;
   width: auto;
+  /* Ensure no background or border shows behind the image */
+  background: transparent;
+  border: none;
 }
 
 /* Caption in the right gutter (the 25% beside the card) */
