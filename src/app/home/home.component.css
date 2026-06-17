@@ -164,9 +164,30 @@
   text-decoration: underline;
 }
 
+.about-image {
+  margin: 2rem 1rem 0;
+  max-width: 600px;
+  width: min(100%, 600px);
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.about-image figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.4;
+}
+
 /* Spacer so projects begin after the about section */
 .hero-spacer {
-  height: 60vh;
+  height: 30vh;
   width: 100%;
 }
 
