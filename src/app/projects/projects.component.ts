@@ -33,6 +33,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       pdf: 'assets/pdfs/Center_for_Contemporary_Architecture.pdf',
     },
     {
+      id: 'stucan-material-library',
+      title: 'STUCAN MATERIAL LIBRARY',
+      subtitle: 'MATERIAL LIBRARY',
+      pdf: 'assets/pdfs/Stucan_Material_Library.pdf',
+    },
+    {
       id: 'permit-set-1',
       title: 'OGDEN HOUSE',
       subtitle: 'PERMIT SET 1',
@@ -49,7 +55,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       title: 'POD A+D RABBIT HOLE DISTILLERY',
       subtitle: 'VENICE BIENNIAL MODEL',
       pdf: 'assets/pdfs/Rabbit_Hole.pdf',
-    },
+    }
   ];
 
   ngOnInit() {
