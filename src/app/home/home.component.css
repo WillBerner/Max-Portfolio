@@ -24,7 +24,7 @@
   /* Constrain the samples area and center it to create left/right breathing room */
   width: 90vw;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto 0;
 }
 .list {
   display: flex;
@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: row;
   /* Align image and caption along a single horizontal spine */
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
   z-index: 1;
   position: relative;
@@ -80,7 +80,7 @@
   width: 25%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: flex-start;
   text-align: left;
   font-size: 18px;
@@ -187,7 +187,7 @@
 
 /* Spacer so projects begin after the about section */
 .hero-spacer {
-  height: 30vh;
+  height: 45vh;
   width: 100%;
 }
 

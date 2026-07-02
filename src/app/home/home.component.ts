@@ -39,6 +39,14 @@ export class HomeComponent implements OnInit {
 
   sampleProjects = [
     {
+      id: 'sustainability-award',
+      title: 'ENVIRONMENTAL SUSTAINABILITY PRIZE',
+      subtitle: 'MACKINTOSH SCHOOL OF ARCHITECTURE 2026',
+      image: 'assets/images/Award.jpg',
+      caption: 'Recipient of the 2026 Environmental Sustainability Prize from the Mackintosh School of Architecture',
+      small: false,
+    },
+    {
       id: 'modern-loft',
       title: 'POD A+D VENICE BIENNIAL',
       subtitle: '3D PRINTED MODEL',
