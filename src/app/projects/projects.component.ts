@@ -36,7 +36,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       id: 'stucan-material-library',
       title: 'STUCAN MATERIAL LIBRARY',
       subtitle: 'MATERIAL LIBRARY',
-      pdf: 'assets/pdfs/Stucan_Material_Library.pdf',
+      pdf: 'assets/pdfs/StuCAN_Material_Library.pdf',
     },
     {
       id: 'permit-set-1',
