@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    const redirectPath = window.location.pathname + window.location.search + window.location.hash;
+    const redirectUrl = '/?redirect=' + encodeURIComponent(redirectPath);
+    window.location.replace(redirectUrl);
+  </script>
+</head>
+<body>
+  <p>Redirecting to the application...</p>
+</body>
+</html>
