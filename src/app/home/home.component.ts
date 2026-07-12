@@ -1,4 +1,11 @@
-import { Component, OnDestroy, NgZone, ChangeDetectorRef, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  NgZone,
+  ChangeDetectorRef,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -8,10 +15,16 @@ import { RouterLink } from '@angular/router';
   selector: 'app-home',
   imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private ngZone: NgZone, private cd: ChangeDetectorRef, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     // open slideshow when arriving with ?slideId=<id> or ?slide=<index>
@@ -31,7 +44,7 @@ export class HomeComponent implements OnInit {
         const idx = Number(s);
         if (!isNaN(idx)) {
           this.openSlideshow(idx);
-          this.router.navigate([], { queryParams: {} , replaceUrl: true });
+          this.router.navigate([], { queryParams: {}, replaceUrl: true });
         }
       }
     });
@@ -43,7 +56,8 @@ export class HomeComponent implements OnInit {
       title: 'ENVIRONMENTAL SUSTAINABILITY PRIZE',
       subtitle: 'MACKINTOSH SCHOOL OF ARCHITECTURE 2026',
       image: 'assets/images/Award.jpg',
-      caption: 'Recipient of the 2026 Environmental Sustainability Prize from the Mackintosh School of Architecture',
+      caption:
+        'Recipient of the 2026 Environmental Sustainability Prize from the Mackintosh School of Architecture',
       small: false,
     },
     {
@@ -99,7 +113,8 @@ export class HomeComponent implements OnInit {
   }
 
   prev() {
-    this.currentIndex = (this.currentIndex - 1 + this.sampleProjects.length) % this.sampleProjects.length;
+    this.currentIndex =
+      (this.currentIndex - 1 + this.sampleProjects.length) % this.sampleProjects.length;
     this.showControls = true;
     this.resetHideTimer();
     this.cd.detectChanges();
@@ -134,9 +149,13 @@ export class HomeComponent implements OnInit {
   private keyHandler = (e: KeyboardEvent) => {
     this.ngZone.run(() => {
       if (!this.slideshowOpen) return;
-      if (e.key === 'ArrowLeft') { this.prev(); }
-      else if (e.key === 'ArrowRight') { this.next(); }
-      else if (e.key === 'Escape') { this.closeSlideshow(); }
+      if (e.key === 'ArrowLeft') {
+        this.prev();
+      } else if (e.key === 'ArrowRight') {
+        this.next();
+      } else if (e.key === 'Escape') {
+        this.closeSlideshow();
+      }
     });
   };
 
@@ -167,8 +186,11 @@ export class HomeComponent implements OnInit {
     const absDx = Math.abs(dx);
     const absDy = Math.abs(dy);
     if (absDx > 40 && absDx > absDy && dt < 1000) {
-      if (dx > 0) { this.prev(); }
-      else { this.next(); }
+      if (dx > 0) {
+        this.prev();
+      } else {
+        this.next();
+      }
     }
     this.resetHideTimer();
   }

@@ -1,11 +1,17 @@
-import { Component, OnDestroy, NgZone, ChangeDetectorRef, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  NgZone,
+  ChangeDetectorRef,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  'assets/pdf.worker.min.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.mjs';
 
 export interface Project {
   id: string;
@@ -20,10 +26,14 @@ export interface Project {
   selector: 'app-projects',
   imports: [CommonModule, RouterLink],
   templateUrl: './projects.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-  constructor(private ngZone: NgZone, private cd: ChangeDetectorRef) {}
+  constructor(
+    private ngZone: NgZone,
+    private cd: ChangeDetectorRef,
+  ) {}
 
   projects: Project[] = [
     {
@@ -55,42 +65,42 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       title: 'POD A+D RABBIT HOLE DISTILLERY',
       subtitle: 'VENICE BIENNIAL MODEL',
       pdf: 'assets/pdfs/Rabbit_Hole.pdf',
-    }
+    },
   ];
 
   ngOnInit() {
-  this.generateThumbnails();
-}
+    this.generateThumbnails();
+  }
 
-async generateThumbnails() {
-  for (const project of this.projects) {
-    try {
-      const pdf = await pdfjsLib.getDocument(project.pdf).promise;
-      const page = await pdf.getPage(1);
+  async generateThumbnails() {
+    for (const project of this.projects) {
+      try {
+        const pdf = await pdfjsLib.getDocument(project.pdf).promise;
+        const page = await pdf.getPage(1);
 
-      const viewport = page.getViewport({ scale: 0.4 });
+        const viewport = page.getViewport({ scale: 0.4 });
 
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
 
-      if (!ctx) continue;
+        if (!ctx) continue;
 
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
 
-      await page.render({
-        canvasContext: ctx,
-        viewport
-      }).promise;
+        await page.render({
+          canvasContext: ctx,
+          viewport,
+        }).promise;
 
-      project.thumbnail = canvas.toDataURL('image/jpeg', 0.85);
+        project.thumbnail = canvas.toDataURL('image/jpeg', 0.85);
 
-      this.cd.detectChanges();
-    } catch (err) {
-      console.error('Thumbnail generation failed:', err);
+        this.cd.detectChanges();
+      } catch (err) {
+        console.error('Thumbnail generation failed:', err);
+      }
     }
   }
-}
 
   // Slideshow state
   slideshowOpen = false;
@@ -130,24 +140,27 @@ async generateThumbnails() {
     document.addEventListener('keydown', this.keyHandler);
     this.cd.detectChanges();
 
-    pdfjsLib.getDocument(project.pdf).promise.then((pdf: any) => {
-      this.ngZone.run(() => {
-        this.pdfDoc = pdf;
-        this.totalPages = pdf.numPages;
-        this.isLoading = false;
-        this.cd.detectChanges();
-        // setTimeout(0): let Angular flush the DOM so the canvas element exists
-        // before we try to render into it
-        setTimeout(() => this.renderPage(this.currentPage), 0);
+    pdfjsLib
+      .getDocument(project.pdf)
+      .promise.then((pdf: any) => {
+        this.ngZone.run(() => {
+          this.pdfDoc = pdf;
+          this.totalPages = pdf.numPages;
+          this.isLoading = false;
+          this.cd.detectChanges();
+          // setTimeout(0): let Angular flush the DOM so the canvas element exists
+          // before we try to render into it
+          setTimeout(() => this.renderPage(this.currentPage), 0);
+        });
+      })
+      .catch((err: any) => {
+        console.error('PDF load error:', err);
+        this.ngZone.run(() => {
+          this.isLoading = false;
+          this.loadError = true;
+          this.cd.detectChanges();
+        });
       });
-    }).catch((err: any) => {
-      console.error('PDF load error:', err);
-      this.ngZone.run(() => {
-        this.isLoading = false;
-        this.loadError = true;
-        this.cd.detectChanges();
-      });
-    });
   }
 
   renderPage(pageNum: number) {
@@ -155,39 +168,54 @@ async generateThumbnails() {
     this.isLoading = true;
     this.cd.detectChanges();
 
-    this.pdfDoc.getPage(pageNum).then((page: any) => {
-      const canvas = document.getElementById('pdf-canvas') as HTMLCanvasElement;
-      if (!canvas) {
-        console.error('pdf-canvas element not found in DOM');
-        this.ngZone.run(() => { this.isLoading = false; this.cd.detectChanges(); });
-        return;
-      }
+    this.pdfDoc
+      .getPage(pageNum)
+      .then((page: any) => {
+        const canvas = document.getElementById('pdf-canvas') as HTMLCanvasElement;
+        if (!canvas) {
+          console.error('pdf-canvas element not found in DOM');
+          this.ngZone.run(() => {
+            this.isLoading = false;
+            this.cd.detectChanges();
+          });
+          return;
+        }
 
-      const container = canvas.parentElement!;
-      const maxW = container.clientWidth * 0.88;
-      const maxH = container.clientHeight * 0.88;
+        const container = canvas.parentElement!;
+        const maxW = container.clientWidth * 0.88;
+        const maxH = container.clientHeight * 0.88;
 
-      const viewport = page.getViewport({ scale: 1 });
-      const scale = Math.min(maxW / viewport.width, maxH / viewport.height);
-      const scaledViewport = page.getViewport({ scale });
+        const viewport = page.getViewport({ scale: 1 });
+        const scale = Math.min(maxW / viewport.width, maxH / viewport.height);
+        const scaledViewport = page.getViewport({ scale });
 
-      canvas.width = scaledViewport.width;
-      canvas.height = scaledViewport.height;
+        canvas.width = scaledViewport.width;
+        canvas.height = scaledViewport.height;
 
-      const ctx = canvas.getContext('2d');
-      page.render({ canvasContext: ctx, viewport: scaledViewport }).promise.then(() => {
+        const ctx = canvas.getContext('2d');
+        page
+          .render({ canvasContext: ctx, viewport: scaledViewport })
+          .promise.then(() => {
+            this.ngZone.run(() => {
+              this.isLoading = false;
+              this.cd.detectChanges();
+            });
+          })
+          .catch((err: any) => {
+            console.error('Render error:', err);
+            this.ngZone.run(() => {
+              this.isLoading = false;
+              this.cd.detectChanges();
+            });
+          });
+      })
+      .catch((err: any) => {
+        console.error('getPage error:', err);
         this.ngZone.run(() => {
           this.isLoading = false;
           this.cd.detectChanges();
         });
-      }).catch((err: any) => {
-        console.error('Render error:', err);
-        this.ngZone.run(() => { this.isLoading = false; this.cd.detectChanges(); });
       });
-    }).catch((err: any) => {
-      console.error('getPage error:', err);
-      this.ngZone.run(() => { this.isLoading = false; this.cd.detectChanges(); });
-    });
   }
 
   prevPage() {
